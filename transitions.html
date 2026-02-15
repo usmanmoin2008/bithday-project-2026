@@ -19,7 +19,7 @@ html, body {
     overflow-x: hidden;
 }
 
-/* ===== EXACT INDEX BACKGROUND ===== */
+/* ===== BACKGROUND ===== */
 .stars{
     position:fixed;
     inset:0;
@@ -39,7 +39,6 @@ html, body {
     50%{opacity:1;}
     100%{opacity:0.3;}
 }
-/* ================================= */
 
 .page{
     min-height:100vh;
@@ -64,7 +63,7 @@ html, body {
     cursor: pointer;
 }
 
-/* ===== RIBBON CONTAINER ===== */
+/* ===== CONTAINER ===== */
 .ribbon-container{
     position: relative;
     width: 440px;
@@ -74,7 +73,10 @@ html, body {
     justify-content:center;
 }
 
-/* ===== ULTRA REALISTIC SILK RIBBON ===== */
+/* ============================= */
+/* ===== CINEMATIC RIBBON ===== */
+/* ============================= */
+
 .ribbon{
     width:340px;
     height:340px;
@@ -111,27 +113,18 @@ html, body {
     transition:1.6s cubic-bezier(0.19,1,0.22,1);
 }
 
-.ribbon-left{
-    left:-20px;
-    transform:translateY(-50%) rotate(0deg);
-}
+.ribbon-left{ left:-20px; transform:translateY(-50%); }
+.ribbon-right{ right:-20px; transform:translateY(-50%); }
 
-.ribbon-right{
-    right:-20px;
-    transform:translateY(-50%) rotate(0deg);
-}
-
-/* open state */
+/* open animation */
 .ribbon.open .ribbon-left{
-    transform:translate(-160px,-50%) rotate(-35deg) scaleX(1.1);
+    transform:translate(-160px,-50%) rotate(-35deg);
     opacity:0.7;
 }
-
 .ribbon.open .ribbon-right{
-    transform:translate(160px,-50%) rotate(35deg) scaleX(1.1);
+    transform:translate(160px,-50%) rotate(35deg);
     opacity:0.7;
 }
-
 .ribbon.open .ribbon-center{
     transform:scale(0.85);
     opacity:0.6;
@@ -163,7 +156,10 @@ html, body {
     transform: translateY(0);
 }
 
-/* ===== REALISTIC BOUQUET ===== */
+/* ============================= */
+/* ===== BOUQUET REVEAL ===== */
+/* ============================= */
+
 .bouquet{
     position:absolute;
     opacity:0;
@@ -179,8 +175,18 @@ html, body {
     filter: blur(0);
 }
 
-/* flower bloom animation */
+/* flowers */
 .real-flower{
+    width:85px;
+    height:85px;
+    position:absolute;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 30% 30%, #ffe3ef, #ff5fa2 55%, #8b0038 100%);
+    box-shadow:
+      0 0 30px rgba(255,120,180,0.7),
+      inset 0 0 18px rgba(255,255,255,0.35),
+      inset 0 -15px 20px rgba(0,0,0,0.4);
     animation: bloom 1.8s cubic-bezier(0.19,1,0.22,1) forwards;
     transform:scale(0);
 }
@@ -190,15 +196,8 @@ html, body {
     60%{transform:scale(1.15); opacity:1;}
     100%{transform:scale(1);}
 }
-/* layout */
-.rf1{top:-45px; left:85px;}
-.rf2{top:5px; left:-10px;}
-.rf3{top:5px; right:-10px;}
-.rf4{top:90px; left:25px;}
-.rf5{top:90px; right:25px;}
-.rf6{top:165px; left:85px;}
 
-/* ===== FLOATING PETALS ===== */
+/* ===== PETALS ===== */
 .petal{
     position:absolute;
     width:12px;
@@ -208,14 +207,13 @@ html, body {
     opacity:0.7;
     animation: floatPetal 10s linear infinite;
 }
-
 @keyframes floatPetal{
     0%{transform:translateY(0) translateX(0); opacity:0;}
     10%{opacity:0.8;}
     100%{transform:translateY(-600px) translateX(80px); opacity:0;}
 }
 
-/* ===== FAST FADE IN (FIXED SPEED) ===== */
+/* ===== FADE IN ===== */
 body{
     opacity:0;
     animation: fastFade 0.7s ease forwards;
@@ -230,7 +228,6 @@ body{
 <body>
 
 <div class="stars" id="stars"></div>
-
 <div class="light-rays"></div>
 
 <!-- MUSIC -->
@@ -250,21 +247,14 @@ body{
         <div class="petal" style="left:80%; animation-delay:6s;"></div>
 
         <!-- BOUQUET -->
-        <div class="bouquet" id="bouquet">
-            <div class="real-flower rf1"></div>
-            <div class="real-flower rf2"></div>
-            <div class="real-flower rf3"></div>
-            <div class="real-flower rf4"></div>
-            <div class="real-flower rf5"></div>
-            <div class="real-flower rf6"></div>
-        </div>
+        <div class="bouquet" id="bouquet"></div>
 
         <!-- RIBBON -->
-       <div class="ribbon" id="ribbon">
-    <div class="ribbon-left"></div>
-    <div class="ribbon-right"></div>
-    <div class="ribbon-center"></div>
-</div>
+        <div class="ribbon" id="ribbon">
+            <div class="ribbon-left"></div>
+            <div class="ribbon-right"></div>
+            <div class="ribbon-center"></div>
+        </div>
 
         <!-- TEXT -->
         <div class="tap-text" id="tapText"></div>
@@ -287,50 +277,29 @@ for(let i=0;i<200;i++){
     starsContainer.appendChild(star);
 }
 
-/* ===== PERFECT MUSIC CONTINUITY ===== */
+/* ===== MUSIC ===== */
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
-
-const musicState = localStorage.getItem("musicState");
-const musicTime = localStorage.getItem("musicTime");
-
-if(musicTime){
-    music.currentTime = parseFloat(musicTime);
-}
-
-if(musicState === "playing"){
-    music.play().catch(()=>{});
-    musicBtn.innerText = "Pause Music ⏸";
-}
-
-setInterval(()=>{
-    if(!music.paused){
-        localStorage.setItem("musicTime", music.currentTime);
-        localStorage.setItem("musicState", "playing");
-    }
-}, 300);
 
 musicBtn.addEventListener("click", ()=>{
     if(music.paused){
         music.play();
         musicBtn.innerText = "Pause Music ⏸";
-        localStorage.setItem("musicState", "playing");
     } else {
         music.pause();
         musicBtn.innerText = "Play Music 🎵";
-        localStorage.setItem("musicState", "paused");
     }
 });
 
-/* ===== 3 TAP SYSTEM ===== */
+/* ===== INTERACTION SYSTEM ===== */
 let tapCount = 0;
 const ribbon = document.getElementById("ribbon");
-const tapText = document.getElementById("tapText");
 const bouquet = document.getElementById("bouquet");
+const tapText = document.getElementById("tapText");
 
 const messages = [
-    "Your tap feels nice<br>Tap again 💖",
-    "Almost there 😋<br>One more 💕"
+    "Your tap feels nice 💖",
+    "Almost there 😋",
 ];
 
 ribbon.addEventListener("click", ()=>{
@@ -342,11 +311,7 @@ ribbon.addEventListener("click", ()=>{
     }
 
     if(tapCount === 2){
-        tapText.classList.remove("show");
-        setTimeout(()=>{
-            tapText.innerHTML = messages[1];
-            tapText.classList.add("show");
-        },300);
+        tapText.innerHTML = messages[1];
     }
 
     if(tapCount === 3){
@@ -363,12 +328,11 @@ ribbon.addEventListener("click", ()=>{
     }
 });
 
-/* dynamic flower spawn */
+/* ===== FLOWER SPAWN ===== */
 function spawnFlowers(){
-    for(let i=0;i<14;i++){
+    for(let i=0;i<16;i++){
         const f = document.createElement("div");
         f.className="real-flower";
-        f.style.position="absolute";
         f.style.left = (Math.random()*160-80)+"px";
         f.style.top = (Math.random()*160-80)+"px";
         f.style.animationDelay = (Math.random()*0.8)+"s";
@@ -379,4 +343,3 @@ function spawnFlowers(){
 
 </body>
 </html>
-
