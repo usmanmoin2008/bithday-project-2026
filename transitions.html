@@ -2,225 +2,146 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You 🌷</title>
+<title>Cinematic Reveal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-@font-face {
-    font-family: 'Sellendra';
-    src: url('sellendra.otf') format('opentype');
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background: radial-gradient(circle at center,#0a0014,#030008,#000);
+    overflow:hidden;
+    font-family: system-ui;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    color: white;
-    font-family: 'Sellendra', cursive;
-    overflow-x: hidden;
-}
-
-/* ===== BACKGROUND ===== */
+/* ===== STARS ===== */
 .stars{
     position:fixed;
     inset:0;
-    background: radial-gradient(circle at center, #2b003f, #120018, #06000b);
-    overflow:hidden;
-    z-index:-1;
+    z-index:0;
 }
 .star{
     position:absolute;
     background:white;
     border-radius:50%;
-    opacity:0.9;
+    opacity:.8;
     animation: twinkle linear infinite;
 }
 @keyframes twinkle{
-    0%{opacity:0.3;}
+    0%,100%{opacity:.2;}
     50%{opacity:1;}
-    100%{opacity:0.3;}
 }
 
-.page{
-    min-height:100vh;
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-/* ===== MUSIC BUTTON ===== */
-#musicBtn{
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 50;
-    font-size: 0.85rem;
-    padding: 9px 15px;
-    border-radius: 30px;
-    background: rgba(255,255,255,0.15);
-    color: #fff;
-    backdrop-filter: blur(6px);
-    cursor: pointer;
-}
-
-/* ===== CONTAINER ===== */
-.ribbon-container{
-    position: relative;
-    width: 440px;
-    height: 440px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-/* ============================= */
-/* ===== CINEMATIC RIBBON ===== */
-/* ============================= */
-
-.ribbon{
-    width:340px;
-    height:340px;
+/* ===== CENTER STAGE ===== */
+.stage{
     position:relative;
-    cursor:pointer;
-    z-index:10;
-    perspective:1000px;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-/* center knot */
-.ribbon-center{
+/* ===== LIGHT BLOOM ===== */
+.light-bloom{
     position:absolute;
-    inset:0;
-    border-radius:50%;
-    background:
-      radial-gradient(circle at 30% 30%, #ffb3c1, #b30000 55%, #3a0000 100%);
-    box-shadow:
-      0 0 60px rgba(255,0,0,0.7),
-      inset 0 0 35px rgba(255,255,255,0.35),
-      inset 0 -35px 45px rgba(0,0,0,0.8);
-    z-index:3;
-}
-
-/* ribbon wings */
-.ribbon-left,.ribbon-right{
-    position:absolute;
-    top:50%;
-    width:180px;
-    height:80px;
-    background:linear-gradient(135deg,#ff6b6b,#7a0000,#ff6b6b);
-    box-shadow: inset 0 0 20px rgba(255,255,255,0.3);
-    border-radius:40px;
-    transform-origin:center;
-    transition:1.6s cubic-bezier(0.19,1,0.22,1);
-}
-
-.ribbon-left{ left:-20px; transform:translateY(-50%); }
-.ribbon-right{ right:-20px; transform:translateY(-50%); }
-
-/* open animation */
-.ribbon.open .ribbon-left{
-    transform:translate(-160px,-50%) rotate(-35deg);
-    opacity:0.7;
-}
-.ribbon.open .ribbon-right{
-    transform:translate(160px,-50%) rotate(35deg);
-    opacity:0.7;
-}
-.ribbon.open .ribbon-center{
-    transform:scale(0.85);
-    opacity:0.6;
-}
-
-/* ===== LIGHT RAYS ===== */
-.light-rays{
-    position:absolute;
-    inset:0;
-    background: radial-gradient(circle, rgba(255,120,180,0.15), transparent 60%);
-    filter: blur(40px);
+    width:500px;
+    height:500px;
+    background: radial-gradient(circle,#ff9acb55,transparent 65%);
+    filter: blur(60px);
+    opacity:0;
+    transform:scale(.5);
+    transition:1.8s ease;
     z-index:1;
 }
-
-/* ===== TAP TEXT ===== */
-.tap-text{
-    position:absolute;
-    bottom:-120px;
-    width:100%;
-    text-align:center;
-    font-size:1.4rem;
-    opacity:0;
-    transform: translateY(15px);
-    transition: 0.7s ease;
-    text-shadow: 0 0 30px rgba(255,180,220,0.9);
-}
-.tap-text.show{
+.light-bloom.show{
     opacity:1;
-    transform: translateY(0);
+    transform:scale(1.4);
 }
 
-/* ============================= */
-/* ===== BOUQUET REVEAL ===== */
-/* ============================= */
+/* ===== RIBBON CORE ===== */
+.ribbon-core{
+    position:relative;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    background: radial-gradient(circle at 30% 30%,#ffb3c7,#b3003a 60%,#3a0012 100%);
+    box-shadow:
+        0 0 60px rgba(255,80,140,.9),
+        inset 0 0 30px rgba(255,255,255,.4),
+        inset 0 -30px 40px rgba(0,0,0,.8);
+    z-index:5;
+    cursor:pointer;
+}
 
+/* ===== RIBBON HALVES ===== */
+.ribbon-half{
+    position:absolute;
+    width:200px;
+    height:70px;
+    background: linear-gradient(135deg,#ff6b9a,#7a0022,#ff6b9a);
+    border-radius:40px;
+    box-shadow: inset 0 0 15px rgba(255,255,255,.4),0 0 25px rgba(255,80,140,.6);
+    transition:1.6s cubic-bezier(.19,1,.22,1);
+}
+.ribbon-top{ top:-120px; }
+.ribbon-bottom{ bottom:-120px; }
+
+.open .ribbon-top{ transform: translateY(-160px) rotate(-25deg); opacity:0;}
+.open .ribbon-bottom{ transform: translateY(160px) rotate(25deg); opacity:0;}
+.open .ribbon-core{ transform:scale(.6); opacity:0; transition:1.4s ease; }
+
+/* ===== BOUQUET ===== */
 .bouquet{
     position:absolute;
     opacity:0;
-    transform: scale(0.4) translateY(120px);
-    transition: 2.2s cubic-bezier(0.19,1,0.22,1);
-    z-index:5;
-    filter: blur(6px);
+    transform: scale(.4) translateY(120px);
+    transition:2s cubic-bezier(.19,1,.22,1);
+    z-index:6;
 }
-
 .bouquet.show{
     opacity:1;
     transform: scale(1) translateY(0);
-    filter: blur(0);
 }
 
-/* flowers */
-.real-flower{
-    width:85px;
-    height:85px;
+/* ===== FLOWERS ===== */
+.flower{
     position:absolute;
+    width:90px;
+    height:90px;
     border-radius:50%;
     background:
-      radial-gradient(circle at 30% 30%, #ffe3ef, #ff5fa2 55%, #8b0038 100%);
+        radial-gradient(circle at 30% 30%,#ffe6f1,#ff5fa2 55%,#7a0032 100%);
     box-shadow:
-      0 0 30px rgba(255,120,180,0.7),
-      inset 0 0 18px rgba(255,255,255,0.35),
-      inset 0 -15px 20px rgba(0,0,0,0.4);
-    animation: bloom 1.8s cubic-bezier(0.19,1,0.22,1) forwards;
-    transform:scale(0);
+        0 0 30px rgba(255,120,180,.7),
+        inset 0 0 15px rgba(255,255,255,.4),
+        inset 0 -15px 20px rgba(0,0,0,.6);
 }
 
-@keyframes bloom{
-    0%{transform:scale(0); opacity:0;}
-    60%{transform:scale(1.15); opacity:1;}
-    100%{transform:scale(1);}
-}
+/* layout */
+.f1{top:-50px;left:80px;}
+.f2{top:10px;left:-10px;}
+.f3{top:10px;right:-10px;}
+.f4{top:90px;left:25px;}
+.f5{top:90px;right:25px;}
+.f6{top:165px;left:80px;}
 
 /* ===== PETALS ===== */
 .petal{
     position:absolute;
-    width:12px;
-    height:12px;
+    width:10px;
+    height:10px;
     background: radial-gradient(circle,#ffd1e8,#ff5fa2);
     border-radius:50%;
-    opacity:0.7;
-    animation: floatPetal 10s linear infinite;
+    opacity:.8;
+    animation: float 10s linear infinite;
 }
-@keyframes floatPetal{
-    0%{transform:translateY(0) translateX(0); opacity:0;}
-    10%{opacity:0.8;}
-    100%{transform:translateY(-600px) translateX(80px); opacity:0;}
-}
-
-/* ===== FADE IN ===== */
-body{
-    opacity:0;
-    animation: fastFade 0.7s ease forwards;
-}
-@keyframes fastFade{
-    from{opacity:0;}
-    to{opacity:1;}
+@keyframes float{
+    0%{transform:translateY(0) translateX(0);opacity:0;}
+    10%{opacity:1;}
+    100%{transform:translateY(-700px) translateX(120px);opacity:0;}
 }
 </style>
 </head>
@@ -228,117 +149,69 @@ body{
 <body>
 
 <div class="stars" id="stars"></div>
-<div class="light-rays"></div>
 
-<!-- MUSIC -->
-<audio id="bgMusic" loop>
-    <source src="Dandelions.mp3" type="audio/mpeg">
-</audio>
+<div class="stage" id="stage">
+    <div class="light-bloom" id="bloom"></div>
 
-<div id="musicBtn">Play Music 🎵</div>
-
-<div class="page">
-    <div class="ribbon-container">
-
-        <!-- PETALS -->
-        <div class="petal" style="left:10%; animation-delay:0s;"></div>
-        <div class="petal" style="left:30%; animation-delay:2s;"></div>
-        <div class="petal" style="left:60%; animation-delay:4s;"></div>
-        <div class="petal" style="left:80%; animation-delay:6s;"></div>
-
-        <!-- BOUQUET -->
-        <div class="bouquet" id="bouquet"></div>
-
-        <!-- RIBBON -->
-        <div class="ribbon" id="ribbon">
-            <div class="ribbon-left"></div>
-            <div class="ribbon-right"></div>
-            <div class="ribbon-center"></div>
-        </div>
-
-        <!-- TEXT -->
-        <div class="tap-text" id="tapText"></div>
-
+    <div class="bouquet" id="bouquet">
+        <div class="flower f1"></div>
+        <div class="flower f2"></div>
+        <div class="flower f3"></div>
+        <div class="flower f4"></div>
+        <div class="flower f5"></div>
+        <div class="flower f6"></div>
     </div>
+
+    <div class="ribbon-container" id="ribbonBox">
+        <div class="ribbon-half ribbon-top"></div>
+        <div class="ribbon-core" id="core"></div>
+        <div class="ribbon-half ribbon-bottom"></div>
+    </div>
+
+    <!-- petals -->
+    <div class="petal" style="left:20%;animation-delay:0s"></div>
+    <div class="petal" style="left:40%;animation-delay:2s"></div>
+    <div class="petal" style="left:60%;animation-delay:4s"></div>
+    <div class="petal" style="left:80%;animation-delay:6s"></div>
 </div>
 
 <script>
 /* ===== STARS ===== */
-const starsContainer = document.getElementById("stars");
-for(let i=0;i<200;i++){
-    const star=document.createElement("div");
-    star.classList.add("star");
-    const size=Math.random()*2.5+1;
-    star.style.width=size+"px";
-    star.style.height=size+"px";
-    star.style.left=Math.random()*100+"%";
-    star.style.top=Math.random()*100+"%";
-    star.style.animationDuration=(Math.random()*3+2)+"s";
-    starsContainer.appendChild(star);
+const stars=document.getElementById("stars");
+for(let i=0;i<180;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    const size=Math.random()*2+1;
+    s.style.width=size+"px";
+    s.style.height=size+"px";
+    s.style.left=Math.random()*100+"%";
+    s.style.top=Math.random()*100+"%";
+    s.style.animationDuration=(Math.random()*3+2)+"s";
+    stars.appendChild(s);
 }
 
-/* ===== MUSIC ===== */
-const music = document.getElementById("bgMusic");
-const musicBtn = document.getElementById("musicBtn");
+/* ===== INTERACTION ===== */
+const core=document.getElementById("core");
+const ribbonBox=document.getElementById("ribbonBox");
+const bouquet=document.getElementById("bouquet");
+const bloom=document.getElementById("bloom");
 
-musicBtn.addEventListener("click", ()=>{
-    if(music.paused){
-        music.play();
-        musicBtn.innerText = "Pause Music ⏸";
-    } else {
-        music.pause();
-        musicBtn.innerText = "Play Music 🎵";
-    }
+let activated=false;
+
+core.addEventListener("click",()=>{
+    if(activated) return;
+    activated=true;
+
+    ribbonBox.classList.add("open");
+
+    setTimeout(()=>{
+        bloom.classList.add("show");
+    },400);
+
+    setTimeout(()=>{
+        bouquet.classList.add("show");
+    },900);
 });
-
-/* ===== INTERACTION SYSTEM ===== */
-let tapCount = 0;
-const ribbon = document.getElementById("ribbon");
-const bouquet = document.getElementById("bouquet");
-const tapText = document.getElementById("tapText");
-
-const messages = [
-    "Your tap feels nice 💖",
-    "Almost there 😋",
-];
-
-ribbon.addEventListener("click", ()=>{
-    tapCount++;
-
-    if(tapCount === 1){
-        tapText.innerHTML = messages[0];
-        tapText.classList.add("show");
-    }
-
-    if(tapCount === 2){
-        tapText.innerHTML = messages[1];
-    }
-
-    if(tapCount === 3){
-        tapText.classList.remove("show");
-
-        /* ribbon opens */
-        ribbon.classList.add("open");
-
-        /* bouquet emerges */
-        setTimeout(()=>{
-            bouquet.classList.add("show");
-            spawnFlowers();
-        },600);
-    }
-});
-
-/* ===== FLOWER SPAWN ===== */
-function spawnFlowers(){
-    for(let i=0;i<16;i++){
-        const f = document.createElement("div");
-        f.className="real-flower";
-        f.style.left = (Math.random()*160-80)+"px";
-        f.style.top = (Math.random()*160-80)+"px";
-        f.style.animationDelay = (Math.random()*0.8)+"s";
-        bouquet.appendChild(f);
-    }
-}
 </script>
 
 </body>
