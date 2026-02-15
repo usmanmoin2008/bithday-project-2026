@@ -76,48 +76,65 @@ html, body {
 
 /* ===== ULTRA REALISTIC SILK RIBBON ===== */
 .ribbon{
-    width: 340px;
-    height: 340px;
-    position: relative;
-    cursor: pointer;
-    z-index: 10;
-    animation: ribbonBreath 4s ease-in-out infinite;
+    width:340px;
+    height:340px;
+    position:relative;
+    cursor:pointer;
+    z-index:10;
+    perspective:1000px;
 }
 
-/* ring */
-.ribbon::before{
-    content:"";
+/* center knot */
+.ribbon-center{
     position:absolute;
     inset:0;
     border-radius:50%;
     background:
-      radial-gradient(circle at 25% 25%, #ff9aa2, #b30000 55%, #3a0000 100%);
+      radial-gradient(circle at 30% 30%, #ffb3c1, #b30000 55%, #3a0000 100%);
     box-shadow:
       0 0 60px rgba(255,0,0,0.7),
       inset 0 0 35px rgba(255,255,255,0.35),
       inset 0 -35px 45px rgba(0,0,0,0.8);
+    z-index:3;
 }
 
-/* cross silk */
-.ribbon::after{
-    content:"";
+/* ribbon wings */
+.ribbon-left,.ribbon-right{
     position:absolute;
     top:50%;
-    left:50%;
-    width:92%;
-    height:92%;
-    transform:translate(-50%,-50%) rotate(45deg);
-    background:
-      linear-gradient(135deg,#ff6b6b,#7a0000,#ff6b6b);
-    box-shadow:
-      inset 0 0 30px rgba(255,255,255,0.4),
-      0 0 25px rgba(255,0,0,0.4);
-    border-radius:24px;
+    width:180px;
+    height:80px;
+    background:linear-gradient(135deg,#ff6b6b,#7a0000,#ff6b6b);
+    box-shadow: inset 0 0 20px rgba(255,255,255,0.3);
+    border-radius:40px;
+    transform-origin:center;
+    transition:1.6s cubic-bezier(0.19,1,0.22,1);
 }
 
-@keyframes ribbonBreath{
-    0%,100%{transform:scale(1);}
-    50%{transform:scale(1.015);}
+.ribbon-left{
+    left:-20px;
+    transform:translateY(-50%) rotate(0deg);
+}
+
+.ribbon-right{
+    right:-20px;
+    transform:translateY(-50%) rotate(0deg);
+}
+
+/* open state */
+.ribbon.open .ribbon-left{
+    transform:translate(-160px,-50%) rotate(-35deg) scaleX(1.1);
+    opacity:0.7;
+}
+
+.ribbon.open .ribbon-right{
+    transform:translate(160px,-50%) rotate(35deg) scaleX(1.1);
+    opacity:0.7;
+}
+
+.ribbon.open .ribbon-center{
+    transform:scale(0.85);
+    opacity:0.6;
 }
 
 /* ===== LIGHT RAYS ===== */
@@ -150,35 +167,29 @@ html, body {
 .bouquet{
     position:absolute;
     opacity:0;
-    transform: scale(0.6) translateY(90px);
-    transition: 1.8s cubic-bezier(0.19,1,0.22,1);
+    transform: scale(0.4) translateY(120px);
+    transition: 2.2s cubic-bezier(0.19,1,0.22,1);
     z-index:5;
-    animation: bouquetSway 6s ease-in-out infinite;
-}
-
-@keyframes bouquetSway{
-    0%,100%{transform:scale(1) translateY(0) rotate(0deg);}
-    50%{transform:scale(1) translateY(-4px) rotate(0.4deg);}
+    filter: blur(6px);
 }
 
 .bouquet.show{
     opacity:1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
 }
 
-/* realistic flowers */
+/* flower bloom animation */
 .real-flower{
-    width:95px;
-    height:95px;
-    position:absolute;
-    border-radius:50%;
-    background:
-      radial-gradient(circle at 30% 30%, #ffe3ef, #ff5fa2 55%, #8b0038 100%);
-    box-shadow:
-      0 0 30px rgba(255,120,180,0.7),
-      inset 0 0 18px rgba(255,255,255,0.35),
-      inset 0 -15px 20px rgba(0,0,0,0.4);
+    animation: bloom 1.8s cubic-bezier(0.19,1,0.22,1) forwards;
+    transform:scale(0);
 }
 
+@keyframes bloom{
+    0%{transform:scale(0); opacity:0;}
+    60%{transform:scale(1.15); opacity:1;}
+    100%{transform:scale(1);}
+}
 /* layout */
 .rf1{top:-45px; left:85px;}
 .rf2{top:5px; left:-10px;}
@@ -249,7 +260,11 @@ body{
         </div>
 
         <!-- RIBBON -->
-        <div class="ribbon" id="ribbon"></div>
+       <div class="ribbon" id="ribbon">
+    <div class="ribbon-left"></div>
+    <div class="ribbon-right"></div>
+    <div class="ribbon-center"></div>
+</div>
 
         <!-- TEXT -->
         <div class="tap-text" id="tapText"></div>
@@ -315,7 +330,7 @@ const bouquet = document.getElementById("bouquet");
 
 const messages = [
     "Your tap feels nice<br>Tap again 💖",
-    "yummy 😋<br>Just one more time 💕"
+    "Almost there 😋<br>One more 💕"
 ];
 
 ribbon.addEventListener("click", ()=>{
@@ -336,12 +351,32 @@ ribbon.addEventListener("click", ()=>{
 
     if(tapCount === 3){
         tapText.classList.remove("show");
+
+        /* ribbon opens */
+        ribbon.classList.add("open");
+
+        /* bouquet emerges */
         setTimeout(()=>{
             bouquet.classList.add("show");
-        },300);
+            spawnFlowers();
+        },600);
     }
 });
+
+/* dynamic flower spawn */
+function spawnFlowers(){
+    for(let i=0;i<14;i++){
+        const f = document.createElement("div");
+        f.className="real-flower";
+        f.style.position="absolute";
+        f.style.left = (Math.random()*160-80)+"px";
+        f.style.top = (Math.random()*160-80)+"px";
+        f.style.animationDelay = (Math.random()*0.8)+"s";
+        bouquet.appendChild(f);
+    }
+}
 </script>
 
 </body>
 </html>
+
