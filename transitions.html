@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You 🌸</title>
+<title>For You 🌷</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -19,7 +19,7 @@ html, body {
     overflow-x: hidden;
 }
 
-/* ===== EXACT BACKGROUND FROM index.html ===== */
+/* ===== EXACT INDEX BACKGROUND ===== */
 .stars{
     position:fixed;
     inset:0;
@@ -27,7 +27,6 @@ html, body {
     overflow:hidden;
     z-index:-1;
 }
-
 .star{
     position:absolute;
     background:white;
@@ -35,13 +34,12 @@ html, body {
     opacity:0.9;
     animation: twinkle linear infinite;
 }
-
 @keyframes twinkle{
     0%{opacity:0.3;}
     50%{opacity:1;}
     100%{opacity:0.3;}
 }
-/* ========================================== */
+/* ================================= */
 
 .page{
     min-height:100vh;
@@ -49,8 +47,6 @@ html, body {
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
-    box-sizing:border-box;
 }
 
 /* ===== MUSIC BUTTON ===== */
@@ -66,75 +62,79 @@ html, body {
     color: #fff;
     backdrop-filter: blur(6px);
     cursor: pointer;
-    user-select: none;
 }
 
-/* ===== RIBBON ===== */
+/* ===== RIBBON CONTAINER ===== */
 .ribbon-container{
     position: relative;
-    width: 260px;
-    height: 260px;
+    width: 420px;
+    height: 420px;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
 }
 
+/* ===== ULTRA REALISTIC RED RIBBON ===== */
 .ribbon{
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, #ffb6d5, #ff5fa2);
-    border-radius: 50%;
-    box-shadow: 0 0 40px rgba(255,120,180,0.6);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    transition: 0.4s ease;
+    width: 320px;
+    height: 320px;
     position: relative;
-    z-index: 5;
+    cursor: pointer;
+    z-index: 10;
 }
 
-.ribbon:active{
-    transform: scale(0.97);
+/* ribbon ring */
+.ribbon::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 30% 30%, #ff6b6b, #b80000 60%, #5a0000 100%);
+    box-shadow:
+      0 0 40px rgba(255,0,0,0.6),
+      inset 0 0 30px rgba(255,255,255,0.2),
+      inset 0 -25px 40px rgba(0,0,0,0.6);
 }
 
-/* ===== SUBTEXT BELOW RIBBON ===== */
-.ribbon-hint{
-    margin-top: 18px;
-    font-size: 0.95rem;
-    text-align: center;
-    opacity: 0.6;
-    line-height: 1.4;
-    text-shadow: 0 0 10px rgba(255,170,210,0.25);
-    transition: 0.5s ease;
+/* ribbon cross */
+.ribbon::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:90%;
+    height:90%;
+    transform:translate(-50%,-50%) rotate(45deg);
+    background: linear-gradient(135deg,#ff5a5a,#9c0000,#ff5a5a);
+    box-shadow: inset 0 0 25px rgba(255,255,255,0.25);
+    border-radius:20px;
 }
 
-/* ===== TEXT POP ===== */
+/* ===== TAP TEXT ===== */
 .tap-text{
     position:absolute;
-    bottom:-90px;
+    bottom:-120px;
     width:100%;
     text-align:center;
-    font-size:1.35rem;
+    font-size:1.4rem;
     opacity:0;
-    transform: translateY(10px);
-    transition: 0.6s ease;
-    text-shadow: 0 0 20px rgba(255,170,210,0.6);
+    transform: translateY(15px);
+    transition: 0.7s ease;
+    text-shadow: 0 0 25px rgba(255,180,220,0.7);
 }
-
 .tap-text.show{
     opacity:1;
     transform: translateY(0);
 }
 
-/* ===== FLOWERS ===== */
+/* ===== REALISTIC BOUQUET ===== */
 .bouquet{
     position:absolute;
     opacity:0;
-    transform: scale(0.6) translateY(40px);
-    transition: 1.3s cubic-bezier(0.19, 1, 0.22, 1);
-    z-index:2;
+    transform: scale(0.6) translateY(80px);
+    transition: 1.6s cubic-bezier(0.19,1,0.22,1);
+    z-index:5;
 }
 
 .bouquet.show{
@@ -142,29 +142,32 @@ html, body {
     transform: scale(1) translateY(0);
 }
 
-.flower{
-    width:60px;
-    height:60px;
-    background: radial-gradient(circle, #ffd1e8, #ff4f9a);
-    border-radius:50%;
+/* realistic flower */
+.real-flower{
+    width:90px;
+    height:90px;
     position:absolute;
-    box-shadow: 0 0 25px rgba(255,120,180,0.7);
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 30% 30%, #ffd6e8, #ff5fa2 60%, #9c003f 100%);
+    box-shadow:
+      0 0 25px rgba(255,120,180,0.6),
+      inset 0 0 15px rgba(255,255,255,0.3);
 }
 
-/* flower layout */
-.f1{top:-40px; left:50px;}
-.f2{top:0px; left:-20px;}
-.f3{top:0px; right:-20px;}
-.f4{top:50px; left:20px;}
-.f5{top:50px; right:20px;}
-.f6{top:100px; left:50px;}
+/* bouquet layout */
+.rf1{top:-40px; left:80px;}
+.rf2{top:10px; left:-10px;}
+.rf3{top:10px; right:-10px;}
+.rf4{top:80px; left:20px;}
+.rf5{top:80px; right:20px;}
+.rf6{top:150px; left:80px;}
 
 /* ===== FADE IN ===== */
 body{
     opacity:0;
     animation: fadeIn 1.2s ease forwards;
 }
-
 @keyframes fadeIn{
     from{opacity:0; filter:blur(4px);}
     to{opacity:1; filter:blur(0);}
@@ -186,33 +189,25 @@ body{
 <div id="musicBtn">Play Music 🎵</div>
 
 <div class="page">
-
     <div class="ribbon-container">
 
-        <!-- FLOWERS -->
+        <!-- BOUQUET -->
         <div class="bouquet" id="bouquet">
-            <div class="flower f1"></div>
-            <div class="flower f2"></div>
-            <div class="flower f3"></div>
-            <div class="flower f4"></div>
-            <div class="flower f5"></div>
-            <div class="flower f6"></div>
+            <div class="real-flower rf1"></div>
+            <div class="real-flower rf2"></div>
+            <div class="real-flower rf3"></div>
+            <div class="real-flower rf4"></div>
+            <div class="real-flower rf5"></div>
+            <div class="real-flower rf6"></div>
         </div>
 
         <!-- RIBBON -->
         <div class="ribbon" id="ribbon"></div>
 
-        <!-- SUBTEXT -->
-        <div class="ribbon-hint">
-            Ribbon is hiding a gift<br>
-            Tap it
-        </div>
-
-        <!-- TAP TEXT -->
+        <!-- TEXT -->
         <div class="tap-text" id="tapText"></div>
 
     </div>
-
 </div>
 
 <script>
@@ -230,7 +225,7 @@ for(let i=0;i<200;i++){
     starsContainer.appendChild(star);
 }
 
-/* ===== MUSIC CONTINUITY SYSTEM ===== */
+/* ===== PERFECT MUSIC CONTINUITY ===== */
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
 
@@ -251,7 +246,7 @@ setInterval(()=>{
         localStorage.setItem("musicTime", music.currentTime);
         localStorage.setItem("musicState", "playing");
     }
-}, 500);
+}, 300);
 
 musicBtn.addEventListener("click", ()=>{
     if(music.paused){
