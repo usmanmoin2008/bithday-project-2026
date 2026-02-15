@@ -1,1 +1,123 @@
-/*cinematic core file*/
+/* ============================= */
+/*        GLOBAL RESET           */
+/* ============================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "SellendraCustom", cursive;
+}
+
+/* ============================= */
+/*        FONT LOAD              */
+/* ============================= */
+@font-face {
+    font-family: "SellendraCustom";
+    src: url("sellendra.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ============================= */
+/*        BODY BASE              */
+/* ============================= */
+html, body {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top, #2a0a3d 0%, #120016 60%, #050008 100%);
+    overflow: hidden;
+    color: #ffe6ff;
+}
+
+/* ============================= */
+/*        PAGE FADE SYSTEM       */
+/* ============================= */
+.page {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    opacity: 0;
+    animation: pageFadeIn 1.8s ease forwards;
+}
+
+@keyframes pageFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================= */
+/*        STAR FIELD             */
+/* ============================= */
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 3s infinite ease-in-out alternate;
+    filter: drop-shadow(0 0 6px rgba(255,255,255,0.9));
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ============================= */
+/*        CENTER SYSTEM          */
+/* ============================= */
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* ============================= */
+/*        BUTTON STYLE           */
+/* ============================= */
+.btn {
+    padding: 14px 36px;
+    font-size: 1.3rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ff7ac8, #ffb3de);
+    color: #3a0030;
+    box-shadow: 0 0 25px rgba(255, 122, 200, 0.6);
+    transition: all 0.4s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 122, 200, 0.9);
+}
+
+/* ============================= */
+/*        TEXT EFFECTS           */
+/* ============================= */
+.fade-text {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.fade-text.show {
+    opacity: 1;
+}
+
+/* ============================= */
+/*        AUDIO                  */
+/* ============================= */
+audio {
+    display: none;
+}
