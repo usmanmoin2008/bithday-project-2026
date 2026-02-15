@@ -8,67 +8,58 @@
 </head>
 
 <body>
-<div class="page" id="page">
 
-    <!-- STAR BACKGROUND -->
-    <div class="stars" id="stars"></div>
+<!-- STAR BACKGROUND -->
+<div class="stars" id="stars"></div>
 
-    <!-- MUSIC BUTTON -->
-    <div id="musicBtn" style="
-        position: fixed;
-        top: 15px;
-        right: 15px;
-        z-index: 10;
-        font-size: 0.9rem;
-        padding: 10px 16px;
-        border-radius: 30px;
-        background: rgba(255,255,255,0.15);
-        color: #fff;
-        backdrop-filter: blur(6px);
-        cursor: pointer;
-        user-select: none;
-    ">
-        Play Music 🎵
-    </div>
+<!-- MUSIC BUTTON -->
+<div id="musicBtn" style="
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 20;
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    user-select: none;
+">
+    Play Music 🎵
+</div>
 
-    <!-- CONTENT -->
-    <div class="center" style="padding:25px; width:100%; max-width:650px;">
+<!-- PAGE CONTENT -->
+<div class="page" style="min-height:200vh; padding:100px 20px 200px 20px;" id="scrollPage">
 
-        <!-- HEADLINE -->
+    <div class="center" style="position:relative; transform:none; left:auto; top:auto; max-width:720px; margin:0 auto; text-align:center;">
+
         <h1 style="
-            font-size:clamp(2.5rem,7vw,3.8rem);
-            margin-bottom:25px;
-            text-align:center;
+            font-size:clamp(2.8rem,7vw,4rem);
+            margin-bottom:60px;
             text-shadow: 0 0 20px rgba(255,180,220,0.4);
         ">
             Happy Birthday Eman 🎂
         </h1>
 
-        <!-- WISH TEXT -->
-        <div id="wishText" style="
-            font-size:clamp(1.15rem,3.8vw,1.45rem);
-            line-height:1.8;
-            text-align:center;
-            opacity:0;
-            animation: fadeInText 2.5s ease forwards;
-            animation-delay:0.5s;
+        <div style="
+            font-size:clamp(1.2rem,3.8vw,1.55rem);
+            line-height:2;
+            opacity:0.92;
         ">
 
-            <p>May your days always feel lighter,<br>
-            even when life feels heavy.</p><br>
+            <p>May your days always feel lighter,<br>even when life feels heavy.</p><br><br>
 
-            <p>May your heart always find calm,<br>
-            even in the noise of the world.</p><br>
+            <p>May your heart always find calm,<br>even in the noise of the world.</p><br><br>
 
-            <p>May you be surrounded by kindness,<br>
-            real smiles, and genuine people.</p><br>
+            <p>May you be surrounded by kindness,<br>real smiles, and genuine people.</p><br><br>
 
-            <p>May every dream you carry<br>
-            slowly find its way into reality.</p><br>
+            <p>May every dream you carry<br>slowly find its way into reality.</p><br><br>
 
             <p>May happiness meet you often,<br>
             peace stay with you longer,<br>
-            and strength rise in you always.</p><br>
+            and strength rise in you always.</p><br><br>
 
             <p>And no matter where life takes you —<br>
             may you always remember<br>
@@ -76,33 +67,18 @@
 
         </div>
 
-        <!-- TAP PROMPT -->
-        <div id="tapPrompt" style="
-            margin-top:40px;
-            font-size:clamp(1rem,3.5vw,1.2rem);
-            opacity:0;
-            text-align:center;
-            animation: fadeInText 2s ease forwards;
-            animation-delay:5s;
-            color: rgba(255,255,255,0.8);
-        ">
-            C’mon, it’s your birthday.<br>
-            Tap anywhere to see more ✨
-        </div>
-
     </div>
-
-    <!-- AUDIO -->
-    <audio id="bgMusic" loop>
-        <source src="Dandelions.mp3" type="audio/mpeg">
-    </audio>
-
 </div>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+    <source src="Dandelions.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 /* STAR GENERATOR */
 const starsContainer = document.getElementById("stars");
-for(let i=0;i<220;i++){
+for(let i=0;i<240;i++){
     const star=document.createElement("div");
     star.classList.add("star");
     const size=Math.random()*2.8+1;
@@ -114,40 +90,56 @@ for(let i=0;i<220;i++){
     starsContainer.appendChild(star);
 }
 
-/* MUSIC SYSTEM */
+/* MUSIC SYSTEM WITH PERSISTENCE */
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
-let musicPlaying = false;
+
+let musicState = localStorage.getItem("musicState") || "paused";
+let musicTime = localStorage.getItem("musicTime") || 0;
+
+music.currentTime = musicTime;
+
+if(musicState === "playing"){
+    music.play();
+    musicBtn.innerText = "Pause Music ⏸";
+}
 
 musicBtn.addEventListener("click", ()=>{
-    if(!musicPlaying){
+    if(music.paused){
         music.play();
-        musicPlaying = true;
+        localStorage.setItem("musicState","playing");
         musicBtn.innerText = "Pause Music ⏸";
     } else {
         music.pause();
-        musicPlaying = false;
+        localStorage.setItem("musicState","paused");
         musicBtn.innerText = "Play Music 🎵";
     }
 });
 
-/* TAP ANYWHERE TRANSITION */
-document.getElementById("page").addEventListener("click", ()=>{
-    document.body.style.transition="opacity 1.2s ease";
-    document.body.style.opacity=0;
-    setTimeout(()=>{
-        window.location.href="transitions.html";
-    },1200);
-});
+setInterval(()=>{
+    if(!music.paused){
+        localStorage.setItem("musicTime", music.currentTime);
+    }
+},500);
 
-/* TEXT ANIMATION */
-const style = document.createElement('style');
-style.innerHTML = `
-@keyframes fadeInText {
-    from {opacity:0; transform: translateY(15px);}
-    to {opacity:1; transform: translateY(0);}
-}`;
-document.head.appendChild(style);
+/* SCROLL TRANSITION */
+let transitioned = false;
+
+window.addEventListener("scroll", ()=>{
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const docHeight = document.body.scrollHeight;
+
+    // Scroll to bottom → go next
+    if(scrollTop + windowHeight >= docHeight - 5 && !transitioned){
+        transitioned = true;
+        document.body.style.transition="opacity 1.2s ease";
+        document.body.style.opacity=0;
+        setTimeout(()=>{
+            window.location.href="transitions.html";
+        },1200);
+    }
+});
 </script>
 
 </body>
