@@ -2,115 +2,221 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You</title>
+<title>For You 🌸</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
 
 <style>
-html, body{
-    margin:0;
-    padding:0;
-    overflow-x:hidden;
-    opacity:0;
-    animation: fadeIn 1.2s ease forwards; /* smooth but not long */
+@font-face {
+    font-family: 'Sellendra';
+    src: url('sellendra.otf') format('opentype');
 }
 
-/* ===== SMOOTH ENTRY ===== */
-@keyframes fadeIn{
-    0%{
-        opacity:0;
-        transform:scale(1.01);
-        filter:blur(3px);
-    }
-    100%{
-        opacity:1;
-        transform:scale(1);
-        filter:blur(0px);
-    }
+html, body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: 'Sellendra', cursive;
+    overflow-x: hidden;
 }
 
-/* ===== SMOOTH EXIT ===== */
-.page-transition{
-    animation: fadeOut 0.9s ease forwards;
+/* ===== EXACT BACKGROUND FROM index.html ===== */
+.stars{
+    position:fixed;
+    inset:0;
+    background: radial-gradient(circle at center, #2b003f, #120018, #06000b);
+    overflow:hidden;
+    z-index:-1;
 }
 
-@keyframes fadeOut{
-    0%{
-        opacity:1;
-        transform:scale(1);
-        filter:blur(0px);
-    }
-    100%{
-        opacity:0;
-        transform:scale(1.02);
-        filter:blur(4px);
-    }
+.star{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:0.9;
+    animation: twinkle linear infinite;
 }
 
-/* ===== PAGE ===== */
+@keyframes twinkle{
+    0%{opacity:0.3;}
+    50%{opacity:1;}
+    100%{opacity:0.3;}
+}
+/* ========================================== */
+
 .page{
     min-height:100vh;
     width:100%;
     display:flex;
     align-items:center;
     justify-content:center;
+    flex-direction:column;
     box-sizing:border-box;
 }
 
-/* ===== CENTER ===== */
-.center{
-    text-align:center;
+/* ===== MUSIC BUTTON ===== */
+#musicBtn{
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 50;
+    font-size: 0.85rem;
+    padding: 9px 15px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    user-select: none;
 }
 
-/* ===== SMILE BUTTON ===== */
-.smile-btn{
-    font-size:6rem;
-    background:none;
-    border:none;
+/* ===== RIBBON ===== */
+.ribbon-container{
+    position: relative;
+    width: 260px;
+    height: 260px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+
+.ribbon{
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #ffb6d5, #ff5fa2);
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(255,120,180,0.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
     cursor:pointer;
-    transition:0.3s ease;
-    user-select:none;
+    transition: 0.4s ease;
+    position: relative;
+    z-index: 5;
 }
 
-.smile-btn:hover{
-    transform:scale(1.1);
+.ribbon:active{
+    transform: scale(0.97);
 }
 
-/* ===== TEXT ===== */
-.touch-text{
-    margin-top:18px;
-    font-size:1.4rem;
-    opacity:0.9;
-    line-height:1.4;
+/* ===== SUBTEXT BELOW RIBBON ===== */
+.ribbon-hint{
+    margin-top: 18px;
+    font-size: 0.95rem;
+    text-align: center;
+    opacity: 0.6;
+    line-height: 1.4;
+    text-shadow: 0 0 10px rgba(255,170,210,0.25);
+    transition: 0.5s ease;
+}
+
+/* ===== TEXT POP ===== */
+.tap-text{
+    position:absolute;
+    bottom:-90px;
+    width:100%;
+    text-align:center;
+    font-size:1.35rem;
+    opacity:0;
+    transform: translateY(10px);
+    transition: 0.6s ease;
+    text-shadow: 0 0 20px rgba(255,170,210,0.6);
+}
+
+.tap-text.show{
+    opacity:1;
+    transform: translateY(0);
+}
+
+/* ===== FLOWERS ===== */
+.bouquet{
+    position:absolute;
+    opacity:0;
+    transform: scale(0.6) translateY(40px);
+    transition: 1.3s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index:2;
+}
+
+.bouquet.show{
+    opacity:1;
+    transform: scale(1) translateY(0);
+}
+
+.flower{
+    width:60px;
+    height:60px;
+    background: radial-gradient(circle, #ffd1e8, #ff4f9a);
+    border-radius:50%;
+    position:absolute;
+    box-shadow: 0 0 25px rgba(255,120,180,0.7);
+}
+
+/* flower layout */
+.f1{top:-40px; left:50px;}
+.f2{top:0px; left:-20px;}
+.f3{top:0px; right:-20px;}
+.f4{top:50px; left:20px;}
+.f5{top:50px; right:20px;}
+.f6{top:100px; left:50px;}
+
+/* ===== FADE IN ===== */
+body{
+    opacity:0;
+    animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; filter:blur(4px);}
+    to{opacity:1; filter:blur(0);}
 }
 </style>
 </head>
 
 <body>
 
+<!-- BACKGROUND -->
+<div class="stars" id="stars"></div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="Dandelions.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MUSIC BUTTON -->
+<div id="musicBtn">Play Music 🎵</div>
+
 <div class="page">
 
-    <!-- EXACT INDEX BACKGROUND -->
-    <div class="stars" id="stars"></div>
+    <div class="ribbon-container">
 
-    <!-- CENTER CONTENT -->
-    <div class="center">
-
-        <!-- BIG SMILE BUTTON -->
-        <button class="smile-btn" id="nextBtn">😊</button>
-
-        <!-- TEXT -->
-        <div class="touch-text">
-            Touch my face<br>
-            Birthday Girl 🎂
+        <!-- FLOWERS -->
+        <div class="bouquet" id="bouquet">
+            <div class="flower f1"></div>
+            <div class="flower f2"></div>
+            <div class="flower f3"></div>
+            <div class="flower f4"></div>
+            <div class="flower f5"></div>
+            <div class="flower f6"></div>
         </div>
+
+        <!-- RIBBON -->
+        <div class="ribbon" id="ribbon"></div>
+
+        <!-- SUBTEXT -->
+        <div class="ribbon-hint">
+            Ribbon is hiding a gift<br>
+            Tap it
+        </div>
+
+        <!-- TAP TEXT -->
+        <div class="tap-text" id="tapText"></div>
 
     </div>
 
 </div>
 
 <script>
-/* ===== EXACT STAR GENERATOR FROM index.html ===== */
+/* ===== STARS ===== */
 const starsContainer = document.getElementById("stars");
 for(let i=0;i<200;i++){
     const star=document.createElement("div");
@@ -123,14 +229,75 @@ for(let i=0;i<200;i++){
     star.style.animationDuration=(Math.random()*3+2)+"s";
     starsContainer.appendChild(star);
 }
-/* ============================================== */
 
-/* ===== SMOOTH NAVIGATION ===== */
-document.getElementById("nextBtn").addEventListener("click", ()=>{
-    document.body.classList.add("page-transition");
-    setTimeout(()=>{
-        window.location.href="page3.html";
-    },900);
+/* ===== MUSIC CONTINUITY SYSTEM ===== */
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+
+const musicState = localStorage.getItem("musicState");
+const musicTime = localStorage.getItem("musicTime");
+
+if(musicTime){
+    music.currentTime = parseFloat(musicTime);
+}
+
+if(musicState === "playing"){
+    music.play().catch(()=>{});
+    musicBtn.innerText = "Pause Music ⏸";
+}
+
+setInterval(()=>{
+    if(!music.paused){
+        localStorage.setItem("musicTime", music.currentTime);
+        localStorage.setItem("musicState", "playing");
+    }
+}, 500);
+
+musicBtn.addEventListener("click", ()=>{
+    if(music.paused){
+        music.play();
+        musicBtn.innerText = "Pause Music ⏸";
+        localStorage.setItem("musicState", "playing");
+    } else {
+        music.pause();
+        musicBtn.innerText = "Play Music 🎵";
+        localStorage.setItem("musicState", "paused");
+    }
+});
+
+/* ===== 3 TAP SYSTEM ===== */
+let tapCount = 0;
+const ribbon = document.getElementById("ribbon");
+const tapText = document.getElementById("tapText");
+const bouquet = document.getElementById("bouquet");
+
+const messages = [
+    "Your tap feels nice<br>Tap again 💖",
+    "yummy 😋<br>Just one more time 💕"
+];
+
+ribbon.addEventListener("click", ()=>{
+    tapCount++;
+
+    if(tapCount === 1){
+        tapText.innerHTML = messages[0];
+        tapText.classList.add("show");
+    }
+
+    if(tapCount === 2){
+        tapText.classList.remove("show");
+        setTimeout(()=>{
+            tapText.innerHTML = messages[1];
+            tapText.classList.add("show");
+        },300);
+    }
+
+    if(tapCount === 3){
+        tapText.classList.remove("show");
+        setTimeout(()=>{
+            bouquet.classList.add("show");
+        },300);
+    }
 });
 </script>
 
