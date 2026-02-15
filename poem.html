@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Poem</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="page">
+
+    <!-- STAR BACKGROUND -->
+    <div class="stars" id="stars"></div>
+
+    <!-- MUSIC BUTTON -->
+    <div id="musicBtn" style="
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 10;
+        font-size: 0.9rem;
+        padding: 10px 16px;
+        border-radius: 30px;
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+        backdrop-filter: blur(6px);
+        cursor: pointer;
+        user-select: none;
+    ">
+        Play Music 🎵
+    </div>
+
+    <!-- CENTER CONTENT -->
+    <div class="center" style="padding:20px; width:100%; max-width:520px;">
+
+        <!-- MESSAGE AREA -->
+        <div id="tapText" class="fade-text" style="
+            min-height:70px;
+            margin-bottom:20px;
+            font-size:clamp(1.2rem,4vw,1.5rem);
+            opacity:0.85;
+        "></div>
+
+        <!-- STATIC BUTTON -->
+        <button id="tapBtn" class="btn">
+            Tap me 💗
+        </button>
+
+    </div>
+
+    <!-- AUDIO (GLOBAL INSTANCE) -->
+    <audio id="bgMusic" loop>
+        <source src="Dandelions.mp3" type="audio/mpeg">
+    </audio>
+
+</div>
+
+<script>
+/* STAR GENERATOR */
+const starsContainer = document.getElementById("stars");
+for(let i=0;i<200;i++){
+    const star=document.createElement("div");
+    star.classList.add("star");
+    const size=Math.random()*2.5+1;
+    star.style.width=size+"px";
+    star.style.height=size+"px";
+    star.style.left=Math.random()*100+"%";
+    star.style.top=Math.random()*100+"%";
+    star.style.animationDuration=(Math.random()*3+2)+"s";
+    starsContainer.appendChild(star);
+}
+
+/* MUSIC SYSTEM */
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+let musicPlaying = false;
+
+musicBtn.addEventListener("click", ()=>{
+    if(!musicPlaying){
+        music.play();
+        musicPlaying = true;
+        musicBtn.innerText = "Pause Music ⏸";
+    } else {
+        music.pause();
+        musicPlaying = false;
+        musicBtn.innerText = "Play Music 🎵";
+    }
+});
+
+/* TAP SYSTEM */
+let tapCount = 0;
+const tapBtn = document.getElementById("tapBtn");
+const tapText = document.getElementById("tapText");
+
+tapBtn.addEventListener("click", ()=>{
+    tapCount++;
+
+    if(tapCount === 1){
+        tapText.classList.remove("show");
+        setTimeout(()=>{
+            tapText.innerHTML = "Your tap feels nice<br>Tap again 💖";
+            tapText.classList.add("show");
+        },200);
+    }
+
+    else if(tapCount === 2){
+        tapText.classList.remove("show");
+        setTimeout(()=>{
+            tapText.innerHTML = "yummy 😋<br>Once more 💕";
+            tapText.classList.add("show");
+        },200);
+    }
+
+    else if(tapCount === 3){
+        document.body.style.transition="opacity 1s ease";
+        document.body.style.opacity=0;
+        setTimeout(()=>{
+            window.location.href="transitions.html";
+        },1000);
+    }
+});
+</script>
+
+</body>
+</html>
