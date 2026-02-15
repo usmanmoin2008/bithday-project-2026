@@ -67,48 +67,66 @@ html, body {
 /* ===== RIBBON CONTAINER ===== */
 .ribbon-container{
     position: relative;
-    width: 420px;
-    height: 420px;
+    width: 440px;
+    height: 440px;
     display:flex;
     align-items:center;
     justify-content:center;
 }
 
-/* ===== ULTRA REALISTIC RED RIBBON ===== */
+/* ===== ULTRA REALISTIC SILK RIBBON ===== */
 .ribbon{
-    width: 320px;
-    height: 320px;
+    width: 340px;
+    height: 340px;
     position: relative;
     cursor: pointer;
     z-index: 10;
+    animation: ribbonBreath 4s ease-in-out infinite;
 }
 
-/* ribbon ring */
+/* ring */
 .ribbon::before{
     content:"";
     position:absolute;
     inset:0;
     border-radius:50%;
     background:
-      radial-gradient(circle at 30% 30%, #ff6b6b, #b80000 60%, #5a0000 100%);
+      radial-gradient(circle at 25% 25%, #ff9aa2, #b30000 55%, #3a0000 100%);
     box-shadow:
-      0 0 40px rgba(255,0,0,0.6),
-      inset 0 0 30px rgba(255,255,255,0.2),
-      inset 0 -25px 40px rgba(0,0,0,0.6);
+      0 0 60px rgba(255,0,0,0.7),
+      inset 0 0 35px rgba(255,255,255,0.35),
+      inset 0 -35px 45px rgba(0,0,0,0.8);
 }
 
-/* ribbon cross */
+/* cross silk */
 .ribbon::after{
     content:"";
     position:absolute;
     top:50%;
     left:50%;
-    width:90%;
-    height:90%;
+    width:92%;
+    height:92%;
     transform:translate(-50%,-50%) rotate(45deg);
-    background: linear-gradient(135deg,#ff5a5a,#9c0000,#ff5a5a);
-    box-shadow: inset 0 0 25px rgba(255,255,255,0.25);
-    border-radius:20px;
+    background:
+      linear-gradient(135deg,#ff6b6b,#7a0000,#ff6b6b);
+    box-shadow:
+      inset 0 0 30px rgba(255,255,255,0.4),
+      0 0 25px rgba(255,0,0,0.4);
+    border-radius:24px;
+}
+
+@keyframes ribbonBreath{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.015);}
+}
+
+/* ===== LIGHT RAYS ===== */
+.light-rays{
+    position:absolute;
+    inset:0;
+    background: radial-gradient(circle, rgba(255,120,180,0.15), transparent 60%);
+    filter: blur(40px);
+    z-index:1;
 }
 
 /* ===== TAP TEXT ===== */
@@ -121,7 +139,7 @@ html, body {
     opacity:0;
     transform: translateY(15px);
     transition: 0.7s ease;
-    text-shadow: 0 0 25px rgba(255,180,220,0.7);
+    text-shadow: 0 0 30px rgba(255,180,220,0.9);
 }
 .tap-text.show{
     opacity:1;
@@ -132,64 +150,93 @@ html, body {
 .bouquet{
     position:absolute;
     opacity:0;
-    transform: scale(0.6) translateY(80px);
-    transition: 1.6s cubic-bezier(0.19,1,0.22,1);
+    transform: scale(0.6) translateY(90px);
+    transition: 1.8s cubic-bezier(0.19,1,0.22,1);
     z-index:5;
+    animation: bouquetSway 6s ease-in-out infinite;
+}
+
+@keyframes bouquetSway{
+    0%,100%{transform:scale(1) translateY(0) rotate(0deg);}
+    50%{transform:scale(1) translateY(-4px) rotate(0.4deg);}
 }
 
 .bouquet.show{
     opacity:1;
-    transform: scale(1) translateY(0);
 }
 
-/* realistic flower */
+/* realistic flowers */
 .real-flower{
-    width:90px;
-    height:90px;
+    width:95px;
+    height:95px;
     position:absolute;
     border-radius:50%;
     background:
-      radial-gradient(circle at 30% 30%, #ffd6e8, #ff5fa2 60%, #9c003f 100%);
+      radial-gradient(circle at 30% 30%, #ffe3ef, #ff5fa2 55%, #8b0038 100%);
     box-shadow:
-      0 0 25px rgba(255,120,180,0.6),
-      inset 0 0 15px rgba(255,255,255,0.3);
+      0 0 30px rgba(255,120,180,0.7),
+      inset 0 0 18px rgba(255,255,255,0.35),
+      inset 0 -15px 20px rgba(0,0,0,0.4);
 }
 
-/* bouquet layout */
-.rf1{top:-40px; left:80px;}
-.rf2{top:10px; left:-10px;}
-.rf3{top:10px; right:-10px;}
-.rf4{top:80px; left:20px;}
-.rf5{top:80px; right:20px;}
-.rf6{top:150px; left:80px;}
+/* layout */
+.rf1{top:-45px; left:85px;}
+.rf2{top:5px; left:-10px;}
+.rf3{top:5px; right:-10px;}
+.rf4{top:90px; left:25px;}
+.rf5{top:90px; right:25px;}
+.rf6{top:165px; left:85px;}
 
-/* ===== FADE IN ===== */
+/* ===== FLOATING PETALS ===== */
+.petal{
+    position:absolute;
+    width:12px;
+    height:12px;
+    background: radial-gradient(circle,#ffd1e8,#ff5fa2);
+    border-radius:50%;
+    opacity:0.7;
+    animation: floatPetal 10s linear infinite;
+}
+
+@keyframes floatPetal{
+    0%{transform:translateY(0) translateX(0); opacity:0;}
+    10%{opacity:0.8;}
+    100%{transform:translateY(-600px) translateX(80px); opacity:0;}
+}
+
+/* ===== FAST FADE IN (FIXED SPEED) ===== */
 body{
     opacity:0;
-    animation: fadeIn 1.2s ease forwards;
+    animation: fastFade 0.7s ease forwards;
 }
-@keyframes fadeIn{
-    from{opacity:0; filter:blur(4px);}
-    to{opacity:1; filter:blur(0);}
+@keyframes fastFade{
+    from{opacity:0;}
+    to{opacity:1;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
 <div class="stars" id="stars"></div>
+
+<div class="light-rays"></div>
 
 <!-- MUSIC -->
 <audio id="bgMusic" loop>
     <source src="Dandelions.mp3" type="audio/mpeg">
 </audio>
 
-<!-- MUSIC BUTTON -->
 <div id="musicBtn">Play Music 🎵</div>
 
 <div class="page">
     <div class="ribbon-container">
+
+        <!-- PETALS -->
+        <div class="petal" style="left:10%; animation-delay:0s;"></div>
+        <div class="petal" style="left:30%; animation-delay:2s;"></div>
+        <div class="petal" style="left:60%; animation-delay:4s;"></div>
+        <div class="petal" style="left:80%; animation-delay:6s;"></div>
 
         <!-- BOUQUET -->
         <div class="bouquet" id="bouquet">
