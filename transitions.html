@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+
+<style>
+html, body{
+    margin:0;
+    padding:0;
+    overflow-x:hidden;
+    opacity:0;
+    animation: fadeIn 2.4s ease forwards;
+}
+
+/* ===== ULTRA SMOOTH ENTRY ===== */
+@keyframes fadeIn{
+    0%{
+        opacity:0;
+        filter:blur(8px);
+        transform:scale(1.02);
+    }
+    100%{
+        opacity:1;
+        filter:blur(0px);
+        transform:scale(1);
+    }
+}
+
+/* ===== CINEMATIC EXIT ===== */
+.page-transition {
+    animation: cinematicFade 1.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes cinematicFade {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.04) translateY(-18px);
+        filter: blur(10px);
+    }
+}
+
+/* ===== PAGE LAYOUT ===== */
+.page{
+    min-height:100vh;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:120px 20px;
+    box-sizing:border-box;
+}
+
+.center{
+    max-width:720px;
+    text-align:center;
+}
+
+/* BUTTON */
+.btn{
+    margin-top:70px;
+    padding:14px 28px;
+    border-radius:40px;
+    border:none;
+    font-size:1.1rem;
+    font-family:inherit;
+    background: rgba(255,255,255,0.15);
+    color:white;
+    backdrop-filter: blur(6px);
+    cursor:pointer;
+    transition:0.4s ease;
+}
+
+.btn:hover{
+    background: rgba(255,255,255,0.25);
+    transform: scale(1.04);
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== EXACT BACKGROUND FROM index.html ===== -->
+<div class="page">
+
+    <!-- STAR BACKGROUND -->
+    <div class="stars" id="stars"></div>
+
+    <!-- CENTER CONTENT -->
+    <div class="center">
+
+        <h1 style="
+            font-size:clamp(2.3rem,6vw,3.4rem);
+            margin-bottom:40px;
+            opacity:0.95;
+        ">
+            Just Something For You ✨
+        </h1>
+
+        <div style="
+            font-size:clamp(1.15rem,3.6vw,1.45rem);
+            line-height:1.7;
+            opacity:0.9;
+        ">
+            <p>
+                Some people walk into your life quietly,<br>
+                and somehow change the atmosphere of it.
+            </p><br>
+
+            <p>
+                Not with noise.<br>
+                Not with force.<br>
+                Just presence.
+            </p><br>
+
+            <p>
+                And the world feels softer<br>
+                when they exist in it.
+            </p>
+        </div>
+
+        <button class="btn" id="nextBtn">
+            Continue ✨
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+/* ===== EXACT STAR GENERATOR FROM index.html ===== */
+const starsContainer = document.getElementById("stars");
+for(let i=0;i<200;i++){
+    const star=document.createElement("div");
+    star.classList.add("star");
+    const size=Math.random()*2.5+1;
+    star.style.width=size+"px";
+    star.style.height=size+"px";
+    star.style.left=Math.random()*100+"%";
+    star.style.top=Math.random()*100+"%";
+    star.style.animationDuration=(Math.random()*3+2)+"s";
+    starsContainer.appendChild(star);
+}
+/* ============================================== */
+
+/* ===== CINEMATIC NAVIGATION ===== */
+document.getElementById("nextBtn").addEventListener("click", ()=>{
+    document.body.classList.add("page-transition");
+    setTimeout(()=>{
+        window.location.href="page3.html";
+    },1800);
+});
+</script>
+
+</body>
+</html>
