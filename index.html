@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>For You</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,13 +14,18 @@
     <div class="stars" id="stars"></div>
 
     <!-- CENTER CONTENT -->
-    <div class="center">
-        <h1 style="font-size:3rem; margin-bottom:20px; opacity:0.9;">I made this for you</h1>
-        <p style="font-size:1.2rem; opacity:0.7; margin-bottom:40px;">
-            Not a website. Not a page.  
-            A feeling.
+    <div class="center" style="padding:20px; width:100%; max-width:500px;">
+        <h1 style="font-size:clamp(2.2rem, 6vw, 3.5rem); margin-bottom:18px; opacity:0.95;">
+            Hi Eman
+        </h1>
+
+        <p style="font-size:clamp(1.2rem, 4vw, 1.6rem); opacity:0.8; margin-bottom:45px;">
+            Got a surprise for you
         </p>
-        <button class="btn" onclick="goNext()">Enter ✨</button>
+
+        <button class="btn" onclick="goNext()" style="font-size:clamp(1.1rem, 4vw, 1.3rem);">
+            Enter ✨
+        </button>
     </div>
 
     <!-- MUSIC -->
@@ -32,10 +38,10 @@
 <script>
 /* STAR GENERATOR */
 const starsContainer = document.getElementById("stars");
-for(let i=0;i<180;i++){
+for(let i=0;i<200;i++){
     const star=document.createElement("div");
     star.classList.add("star");
-    const size=Math.random()*2+1;
+    const size=Math.random()*2.5+1;
     star.style.width=size+"px";
     star.style.height=size+"px";
     star.style.left=Math.random()*100+"%";
@@ -46,10 +52,11 @@ for(let i=0;i<180;i++){
 
 /* TRANSITION */
 function goNext(){
+    document.body.style.transition="opacity 0.8s ease";
     document.body.style.opacity = 0;
     setTimeout(()=>{
         window.location.href="poem.html";
-    },900);
+    },800);
 }
 </script>
 
