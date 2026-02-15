@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>For You</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="page">
+
+    <!-- STAR BACKGROUND -->
+    <div class="stars" id="stars"></div>
+
+    <!-- CENTER CONTENT -->
+    <div class="center">
+        <h1 style="font-size:3rem; margin-bottom:20px; opacity:0.9;">I made this for you</h1>
+        <p style="font-size:1.2rem; opacity:0.7; margin-bottom:40px;">
+            Not a website. Not a page.  
+            A feeling.
+        </p>
+        <button class="btn" onclick="goNext()">Enter ✨</button>
+    </div>
+
+    <!-- MUSIC -->
+    <audio autoplay loop>
+        <source src="Dandelions.mp3" type="audio/mpeg">
+    </audio>
+
+</div>
+
+<script>
+/* STAR GENERATOR */
+const starsContainer = document.getElementById("stars");
+for(let i=0;i<180;i++){
+    const star=document.createElement("div");
+    star.classList.add("star");
+    const size=Math.random()*2+1;
+    star.style.width=size+"px";
+    star.style.height=size+"px";
+    star.style.left=Math.random()*100+"%";
+    star.style.top=Math.random()*100+"%";
+    star.style.animationDuration=(Math.random()*3+2)+"s";
+    starsContainer.appendChild(star);
+}
+
+/* TRANSITION */
+function goNext(){
+    document.body.style.opacity = 0;
+    setTimeout(()=>{
+        window.location.href="poem.html";
+    },900);
+}
+</script>
+
+</body>
+</html>
