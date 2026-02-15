@@ -11,7 +11,6 @@
     src: url('sellendra.otf') format('opentype');
 }
 
-/* ===== BASE ===== */
 html, body {
     margin: 0;
     padding: 0;
@@ -20,31 +19,7 @@ html, body {
     overflow-x: hidden;
 }
 
-/* ===== ULTRA CINEMATIC FADE-IN ===== */
-body {
-    animation: ultraFadeIn 4s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-@keyframes ultraFadeIn {
-    0% {
-        opacity: 0;
-        filter: blur(14px) brightness(0.6);
-        transform: scale(1.06);
-    }
-    60% {
-        opacity: 0.7;
-        filter: blur(6px) brightness(0.85);
-        transform: scale(1.03);
-    }
-    100% {
-        opacity: 1;
-        filter: blur(0) brightness(1);
-        transform: scale(1);
-    }
-}
-/* ================================ */
-
-/* ===== BACKGROUND ===== */
+/* ===== EXACT BACKGROUND STYLE ===== */
 .stars{
     position:fixed;
     inset:0;
@@ -53,13 +28,12 @@ body {
     z-index:-1;
 }
 
-/* STAR LAYER */
 .star{
     position:absolute;
     background:white;
     border-radius:50%;
-    opacity:0;
-    animation: twinkle linear infinite, starReveal 4s ease forwards;
+    opacity:0.9;
+    animation: twinkle linear infinite;
 }
 
 @keyframes twinkle{
@@ -67,12 +41,7 @@ body {
     50%{opacity:1;}
     100%{opacity:0.3;}
 }
-
-@keyframes starReveal{
-    from{opacity:0;}
-    to{opacity:0.9;}
-}
-/* ================================ */
+/* ================================= */
 
 /* PAGE */
 .page {
@@ -100,95 +69,91 @@ body {
     border-radius: 30px;
     background: rgba(255,255,255,0.15);
     color: #fff;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
     cursor: pointer;
     user-select: none;
-    transition: 0.4s ease;
-}
-
-#musicBtn:hover{
-    background: rgba(255,255,255,0.25);
 }
 
 /* BUTTON */
 .btn{
     margin-top: 70px;
-    padding: 14px 30px;
+    padding: 14px 28px;
     border-radius: 40px;
     border: none;
     font-size: 1.1rem;
     font-family: 'Sellendra', cursive;
-    background: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.15);
     color: white;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(6px);
     cursor: pointer;
-    transition: 0.5s ease;
+    transition: 0.4s ease;
 }
 
 .btn:hover{
-    background: rgba(255,255,255,0.3);
-    transform: scale(1.06);
+    background: rgba(255,255,255,0.25);
+    transform: scale(1.03);
 }
 
-/* ===== ULTRA CINEMATIC FADE-OUT ===== */
+/* ===== CINEMATIC TRANSITION ===== */
 .page-transition {
-    animation: ultraFadeOut 2.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    animation: cinematicFade 1.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
 }
 
-@keyframes ultraFadeOut {
+@keyframes cinematicFade {
     0% {
         opacity: 1;
         transform: scale(1) translateY(0);
-        filter: blur(0) brightness(1);
-    }
-    50% {
-        opacity: 0.6;
-        transform: scale(1.03) translateY(-10px);
-        filter: blur(6px) brightness(0.85);
+        filter: blur(0px);
     }
     100% {
         opacity: 0;
-        transform: scale(1.07) translateY(-22px);
-        filter: blur(14px) brightness(0.6);
+        transform: scale(1.03) translateY(-12px);
+        filter: blur(6px);
     }
 }
-/* ================================= */
+/* =============================== */
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
+<!-- ===== EXACT BACKGROUND FROM index.html ===== -->
 <div class="stars" id="stars"></div>
+<!-- =========================================== -->
 
 <!-- MUSIC BUTTON -->
 <div id="musicBtn">Play Music 🎵</div>
 
-<!-- CONTENT -->
+<!-- PAGE CONTENT -->
 <div class="page">
     <div class="center">
 
         <h1 style="
             font-size:clamp(2.6rem,6.5vw,3.8rem);
             margin-bottom:50px;
-            text-shadow: 0 0 25px rgba(255,180,220,0.45);
+            text-shadow: 0 0 20px rgba(255,180,220,0.4);
         ">
             Happy Birthday Eman 🎂
         </h1>
 
         <div style="
             font-size:clamp(1.15rem,3.6vw,1.45rem);
-            line-height:1.65;
-            opacity:0.96;
+            line-height:1.7;
+            opacity:0.95;
         ">
 
             <p>May your days always feel lighter,<br>even when life feels heavy.</p><br>
+
             <p>May your heart always find calm,<br>even in the noise of the world.</p><br>
+
             <p>May you be surrounded by kindness,<br>real smiles, and genuine people.</p><br>
+
             <p>May every dream you carry<br>slowly find its way into reality.</p><br>
+
             <p>May happiness meet you often,<br>
             peace stay with you longer,<br>
             and strength rise in you always.</p><br>
+
             <p>And no matter where life takes you —<br>
             may you always remember<br>
             how special you truly are.</p>
@@ -208,22 +173,22 @@ body {
 </audio>
 
 <script>
-/* ===== STAR GENERATOR ===== */
+/* ===== STAR GENERATOR (EXACT LOGIC) ===== */
 const starsContainer = document.getElementById("stars");
-for(let i=0;i<220;i++){
+for(let i=0;i<200;i++){
     const star=document.createElement("div");
     star.classList.add("star");
-    const size=Math.random()*2.8+1;
+    const size=Math.random()*2.5+1;
     star.style.width=size+"px";
     star.style.height=size+"px";
     star.style.left=Math.random()*100+"%";
     star.style.top=Math.random()*100+"%";
-    star.style.animationDuration=(Math.random()*4+3)+"s";
+    star.style.animationDuration=(Math.random()*3+2)+"s";
     starsContainer.appendChild(star);
 }
-/* ========================= */
+/* ======================================= */
 
-/* MUSIC SYSTEM */
+/* MUSIC SYSTEM — RESET ON EVERY ENTRY */
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
 
@@ -240,13 +205,15 @@ musicBtn.addEventListener("click", ()=>{
     }
 });
 
-/* ULTRA CINEMATIC NAVIGATION */
+/* ===== SMOOTH CINEMATIC NAVIGATION ===== */
 document.getElementById("nextBtn").addEventListener("click", ()=>{
     document.body.classList.add("page-transition");
+
     setTimeout(()=>{
         window.location.href="transitions.html";
-    },2400);
+    },1600);
 });
+/* ===================================== */
 </script>
 
 </body>
