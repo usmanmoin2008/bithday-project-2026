@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Poem</title>
+<title>Happy Birthday</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<div class="page">
+<div class="page" id="page">
 
     <!-- STAR BACKGROUND -->
     <div class="stars" id="stars"></div>
@@ -31,25 +31,68 @@
         Play Music 🎵
     </div>
 
-    <!-- CENTER CONTENT -->
-    <div class="center" style="padding:20px; width:100%; max-width:520px;">
+    <!-- CONTENT -->
+    <div class="center" style="padding:25px; width:100%; max-width:650px;">
 
-        <!-- MESSAGE AREA -->
-        <div id="tapText" class="fade-text" style="
-            min-height:70px;
-            margin-bottom:20px;
-            font-size:clamp(1.2rem,4vw,1.5rem);
-            opacity:0.85;
-        "></div>
+        <!-- HEADLINE -->
+        <h1 style="
+            font-size:clamp(2.5rem,7vw,3.8rem);
+            margin-bottom:25px;
+            text-align:center;
+            text-shadow: 0 0 20px rgba(255,180,220,0.4);
+        ">
+            Happy Birthday Eman 🎂
+        </h1>
 
-        <!-- STATIC BUTTON -->
-        <button id="tapBtn" class="btn">
-            Tap me 💗
-        </button>
+        <!-- WISH TEXT -->
+        <div id="wishText" style="
+            font-size:clamp(1.15rem,3.8vw,1.45rem);
+            line-height:1.8;
+            text-align:center;
+            opacity:0;
+            animation: fadeInText 2.5s ease forwards;
+            animation-delay:0.5s;
+        ">
+
+            <p>May your days always feel lighter,<br>
+            even when life feels heavy.</p><br>
+
+            <p>May your heart always find calm,<br>
+            even in the noise of the world.</p><br>
+
+            <p>May you be surrounded by kindness,<br>
+            real smiles, and genuine people.</p><br>
+
+            <p>May every dream you carry<br>
+            slowly find its way into reality.</p><br>
+
+            <p>May happiness meet you often,<br>
+            peace stay with you longer,<br>
+            and strength rise in you always.</p><br>
+
+            <p>And no matter where life takes you —<br>
+            may you always remember<br>
+            how special you truly are.</p>
+
+        </div>
+
+        <!-- TAP PROMPT -->
+        <div id="tapPrompt" style="
+            margin-top:40px;
+            font-size:clamp(1rem,3.5vw,1.2rem);
+            opacity:0;
+            text-align:center;
+            animation: fadeInText 2s ease forwards;
+            animation-delay:5s;
+            color: rgba(255,255,255,0.8);
+        ">
+            C’mon, it’s your birthday.<br>
+            Tap anywhere to see more ✨
+        </div>
 
     </div>
 
-    <!-- AUDIO (GLOBAL INSTANCE) -->
+    <!-- AUDIO -->
     <audio id="bgMusic" loop>
         <source src="Dandelions.mp3" type="audio/mpeg">
     </audio>
@@ -59,10 +102,10 @@
 <script>
 /* STAR GENERATOR */
 const starsContainer = document.getElementById("stars");
-for(let i=0;i<200;i++){
+for(let i=0;i<220;i++){
     const star=document.createElement("div");
     star.classList.add("star");
-    const size=Math.random()*2.5+1;
+    const size=Math.random()*2.8+1;
     star.style.width=size+"px";
     star.style.height=size+"px";
     star.style.left=Math.random()*100+"%";
@@ -88,38 +131,23 @@ musicBtn.addEventListener("click", ()=>{
     }
 });
 
-/* TAP SYSTEM */
-let tapCount = 0;
-const tapBtn = document.getElementById("tapBtn");
-const tapText = document.getElementById("tapText");
-
-tapBtn.addEventListener("click", ()=>{
-    tapCount++;
-
-    if(tapCount === 1){
-        tapText.classList.remove("show");
-        setTimeout(()=>{
-            tapText.innerHTML = "Your tap feels nice<br>Tap again 💖";
-            tapText.classList.add("show");
-        },200);
-    }
-
-    else if(tapCount === 2){
-        tapText.classList.remove("show");
-        setTimeout(()=>{
-            tapText.innerHTML = "yummy 😋<br>Once more 💕";
-            tapText.classList.add("show");
-        },200);
-    }
-
-    else if(tapCount === 3){
-        document.body.style.transition="opacity 1s ease";
-        document.body.style.opacity=0;
-        setTimeout(()=>{
-            window.location.href="transitions.html";
-        },1000);
-    }
+/* TAP ANYWHERE TRANSITION */
+document.getElementById("page").addEventListener("click", ()=>{
+    document.body.style.transition="opacity 1.2s ease";
+    document.body.style.opacity=0;
+    setTimeout(()=>{
+        window.location.href="transitions.html";
+    },1200);
 });
+
+/* TEXT ANIMATION */
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes fadeInText {
+    from {opacity:0; transform: translateY(15px);}
+    to {opacity:1; transform: translateY(0);}
+}`;
+document.head.appendChild(style);
 </script>
 
 </body>
